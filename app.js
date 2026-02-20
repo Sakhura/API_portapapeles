@@ -2,7 +2,7 @@
 const inputOrigen = document.getElementById('inputOrigen');
 const inputDestino = document.getElementById('inputDestino');
 const mensajeCopiar = document.getElementById('mensajeCopiar');
-const inputOrmensajePegarigen = document.getElementById('mensajePegar');
+const mensajePegar = document.getElementById('mensajePegar');
 
 function setMensaje(el, texto, tipo ='ok'){
     el.textContent = texto;
@@ -14,24 +14,24 @@ function copiarTexto(){
     const texto = inputOrigen.value.trim();
     //tiene que validar que no este vacio
 
-    if(texto){
-        setMensaje(msgCopiar, 'INGRESA PRIMERO EL TEXTO', 'warn');
+   if(!texto){
+        setMensaje(mensajeCopiar, 'INGRESA PRIMERO EL TEXTO', 'warn');
         return
-    }
+    } 
 
     //verificar soporte de la api
     if(!navigator.clipboard){
-        setMensaje(msgCopiar, 'CLIPBOARD NO DISPONIBLE', 'err');
+        setMensaje(mensajeCopiar, 'CLIPBOARD NO DISPONIBLE', 'err');
         return
     }
 
     //llamar api
     navigator.clipboard.writeText(texto)
     .then(function(){
-        setMensaje(msgCopiar, 'TEXTO COPIADO EN EL PORTAPAPELES', 'ok');
+        setMensaje(mensajeCopiar, 'TEXTO COPIADO EN EL PORTAPAPELES', 'ok');
     })
     .catch(function(error){
-        setMensaje(msgCopiar, 'ERROR', +Error.message, 'err');
+        setMensaje(mensajeCopiar, 'ERROR', +Error.message, 'err');
     });
 }
 
@@ -42,22 +42,22 @@ function copiarTexto(){
 function pegarTexto(){
         //verificar el soporte de la API
     if(!navigator.clipboard){
-        setMensaje(msgCopiar, 'CLIPBOARD API NO DISPONIBLE', 'err');
+        setMensaje(mensajeCopiar, 'CLIPBOARD API NO DISPONIBLE', 'err');
         return;
     }
 
     // llamada api
-    navigator.clipboard.readText(texto)
+    navigator.clipboard.readText()
         .then(function(texto){
             if(texto){
                 inputDestino.value = texto;
-                setMensaje(msgPegar, 'TEXTO PEGADO CORRECTAMENTE', 'ok');
+                setMensaje(mensajePegar, 'TEXTO PEGADO CORRECTAMENTE', 'ok');
             }else { 
-                setMensaje(msgPegar, 'EL PORTAPAPELES ESTA VACIO', 'warn');
+                setMensaje(mensajePegar, 'EL PORTAPAPELES ESTA VACIO', 'warn');
             }
         })
         .catch(function(error){
-            setMensaje(msgPegar, 'PERMISO DENEGADO', 'err');
+            setMensaje(mensajePegar, 'PERMISO DENEGADO', 'err');
         });
         
 }
